@@ -1,0 +1,12 @@
+{% if searching_title  > 0 %}
+
+{% for title in searching_title %}
+	<li><a href="{% url 'article' url_title=title.url_title article_id=title.id}">{{ title.title }}</a></li>
+{% endfor %}
+
+{% else %}
+
+<li>Nie znaleziono</li>
+
+{% endif %}
+

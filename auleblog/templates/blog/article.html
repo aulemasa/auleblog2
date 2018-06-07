@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+            <h2 class="blog-post-title">{{ art.title }}</h2>
+            <p class="blog-post-meta"><strong>{{ art.date_pub }}</strong> popełniony przez <strong>{{ art.article_author }}</strong></p>
+            <p>{{ art.content|safe}}</p>
+            <p class="coment-text text-right"><a href="{% url 'pdf' article_id=art.id %}"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>Wersja PDF</a></p>
+			<hr>
+			<nav>
+            <ul class="pager">
+				{% if prev %}<li><a href="{%url 'article' prev.url_title prev.id %}">Poprzedni</a></li>{% endif %}
+				<li><a href="{% url 'articles_list' %}">Powrót</a></li>
+				{% if next %}<li><a href="{%url 'article' next.url_title next.id %}">Nastepny</a></li>{% endif %}
+            </ul>
+          </nav>
+		  <!-- Dodawanie komentarzy -->
+		  {% if comment %}
+		  <p>Komentarze:</p>
+		  <div class="media">
+		  <table class="table table-striped">
+		  {% for comment in comment %}
+				<tr>
+				<td>
+				<div class="media_body">
+				<h6 class="media-heading"><p class="coment-title"><strong>{{ comment.comment_author }}</strong></h6>
+				<p class="coment-text">{{ comment.comment_content }}<br /><p>
+				<p class="sub-text">{{ comment.comment_add_data }}</p>
+				</div>
+				</td>
+				</tr>
+			{% endfor %}
+		  </table>
+		  </div>
+		  {% endif %}
+		  <p>Dodaj komentarz:</p>
+		  <form method="post">
+		  <div class="form-group">
+			{{form.comment_author}}
+			</div>
+			<div class="form-group">
+			{{form.comment_content}}
+			</div>
+			<div class="form-group">
+			{{form.post}}
+			</div>
+			<button type="submit" class="btn btn-default btn-sm">Dodaj</button>
+
+		<form>
+{% endblock %}
+

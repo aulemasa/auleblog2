@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}
+<title>Aule Blog</title>
+{% endblock %}
+
+{% block content %}
+			{% for wszystkie in article_all_pagination %}
+            <h2 class="blog-post-title"><a href="{% url 'article' url_title=wszystkie.url_title article_id=wszystkie.id %}">{{ wszystkie.title }}</a></h2>
+            <p class="blog-post-meta"><strong>{{ wszystkie.date_pub }}</strong> popełniony przez <strong>{{ wszystkie.article_author }}</strong></p>
+            <p>{{ wszystkie.content|safe|escape|truncatechars:150 }}</p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p class="coment-text text-left">Liczba odwiedzin: {{ wszystkie.counter }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="coment-text text-right">Komentarze: {{ wszystkie.comment_set.count }}</p>
+                </div>
+            </div>
+			<hr>
+			{% endfor %}
+
+			<div class="pagination">
+   <span class="step-links">
+        {% if page_filter.has_previous %}
+            <a href="?page={{ article_all_pagination.previous_page_number }}">poprzednia</a>
+        {% endif %}
+
+        <span class="current">
+            Strona {{ article_all_pagination.number }} z {{ article_all_pagination.paginator.num_pages }}
+        </span>
+
+        {% if page_filter.has_next %}
+            <a href="?page={{ article_all_pagination.next_page_number }}">następna</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
+

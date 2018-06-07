@@ -1,0 +1,9 @@
+{% extends "base_pdf.html" %}
+
+{% block content %}
+            <h2 class="blog-post-title">{{ single_article.title }}</h2>
+            <p class="blog-post-meta"><strong>{{ single_article.date_pub }}</strong> popełniony przez <strong>{{ single_article.article_author }}</strong></p>
+            <p>{{ single_article.content|safe}}</p>
+			<hr>
+{% endblock %}
+

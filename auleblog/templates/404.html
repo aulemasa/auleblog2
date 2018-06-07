@@ -1,0 +1,35 @@
+<html lang="pl">
+  <head>
+      <meta name="google-site-verification" content="VtozoGKmB3NWhWe0T_5zqtWZPV1ZWJREJz0Gm0fx5gg" />
+      <meta name="Description" content="Blog programisty amatora który zamieszcza tutaj posty związane z etapami tworzenia tego bloga w Django jak również innych aplikacji stworzonych przez niego w Djago." />
+      <meta name="Keywords" content="Django, Blog, Tworzenie aplikacji, Python, Aplikacje w Django" />
+  	{%load staticfiles %}
+    <link href="{% static "css/bootstrap.min.css"%}" rel="stylesheet">
+	<link href="{% static "css/blog.css"%}" rel="stylesheet">
+	<link href="{% static "css/tabela.css"%}" rel="stylesheet">
+	<link href="{% static "js/hl/styles/idea.css"%}" rel="stylesheet">
+	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://aule.pythonanywhere.com/artykuly/rss/" />
+<style>
+html, body, .container-table {
+    height: 100%;
+}
+.container-table {
+    display: table;
+}
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+</style>
+
+    <title>Aule Blog</title>
+<!-- Latest compiled and minified CSS -->
+
+  </head>
+<body>
+    <div class="container container-table">
+        <div class="row vertical-center-row">
+            <a href="{% url 'articles_list' %}" style="text-decoration: none;"><h1 class="text-center col-md-4 col-md-offset-4"><img src="/media/image/logo404.png" alt="Aule Blog"/> Aule Blog <br/>404 jestes w tunelu</h1></a>
+        </div>
+    </div>
+</body>

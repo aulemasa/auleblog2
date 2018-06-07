@@ -1,0 +1,139 @@
+<html lang="pl">
+	<head>
+		{% block title %}{% endblock %}
+    {% block meta_description %}{% endblock %}
+    {% block meta_keywords %}{% endblock %}
+    <meta name="Description" content="Blog programisty amatora który zamieszcza tutaj posty związane z etapami tworzenia tego bloga w Django jak również innych aplikacji stworzonych przez niego w Djago." />
+    <meta name="Keywords" content="Django, Blog, Tworzenie aplikacji, Python, Aplikacje w Django" />
+    {%load blog_tags %}
+  	{%load staticfiles %}
+    <link href="{% static "blog/css/bootstrap.min.css"%}" rel="stylesheet">
+	  <link href="{% static "blog/css/blog.css"%}" rel="stylesheet">
+	  <link href="{% static "blog/css/tabela.css"%}" rel="stylesheet">
+	  <link href="{% static "blog/js/hl/styles/idea.css"%}" rel="stylesheet">
+	  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://aule.pythonanywhere.com/artykuly/rss/" />
+  </head>
+  
+  <body>
+
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="{% url 'articles_list' %}">Home</a>
+        {% for elementy_kategorie in category_all_in_view %}
+          <a class="blog-nav-item" href="/category/{{elementy_kategorie.id}}" name="tag" value="{{elementy_kategorie.id}}">{{elementy_kategorie.category_name}}</a>
+        {% endfor %}
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="blog-header">
+        <a href="{% url 'articles_list' %}" style="text-decoration: none;"><h1 class="blog-title"><img src="/media/image/logo.png" alt="Aule Blog"/> Aule Blog</h1></a>
+        <p class="lead blog-description">O pythonie i nie tylko</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+		<div class="blog-post" id="content">
+			{% block content %}{% endblock %}
+          </div>
+		  </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>O blogu</h4>
+            <p>Blog programisty amatora który zamieszcza tutaj posty związane z etapami tworzenia tego bloga jak również innych aplikacji stworzonych przez niego. Stara się żeby jego kod działał choć nie ma pewności że jest zgodny ze sztuką.</p>
+          </div>
+          <div class="sidebar-module">
+		  {{ view_calendar }}
+		  {% if view_calendar %}
+		    <form method="get" class="form-inline" id="cell">
+                <button type="submit" class="btn btn-sm" id="guzik" name="pm" value="{{start_value}}"><span class="glyphicon glyphicon-arrow-left"></span> Poprz. Miesiąc</button>
+                <button type="submit" class="btn btn-sm" name="am" value="1">Akt. Miesiąc</button>
+            </form>
+            {% endif %}
+		  </div>
+          <div class="sidebar-module">
+            <h4>Wyszukaj</h4>
+			{% csrf_token %}
+			<input type="text" id="search" name="search" />
+
+			<ul id="search-results">
+			</ul>
+
+          </div>
+          <div class="sidebar-module">
+            <h4>Najczęściej czytane:</h4>
+            {% get_most_viewed_posts as most_viewed_posts %}
+            <ol class="list-unstyled">
+            {% for post in most_viewed_posts %}
+            <li>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }} ({{ post.counter }})</a>
+            </li>
+            {% endfor %}
+            </ol>
+            <h4>Najczęściej komentowane:</h4>
+            {% get_most_commented_posts as most_commented_posts %}
+            <ol class="list-unstyled">
+            {% for post in most_commented_posts %}
+            <li>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            </li>
+            {% endfor %}
+            </ol>
+            <br />
+            <span>Ilość postów: {% total_posts %}</span><br/>
+            <span>Ilość komentarzy: {% total_comments %}</span>
+         </div>
+
+          <div class="sidebar-module">
+            <h4>Inne:</h4>
+            <ol class="list-unstyled">
+              <li><a href="{% url "new_entry" %}">RSS</a></li>
+              <li><a href="#">GitHub</a></li>
+              <li><a href="https://pl.python.org/forum/">Polskie forum Pythona</a></li>
+              <li><a href="https://www.facebook.com/groups/pythonpl/">Facebook</a></li>
+            </ol>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <footer class="blog-footer">
+      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	  <script src="{% static 'blog/ajax.js' %}" </script>
+	  <script src="{% static "js/hl/highlight.pack.js"%}"</script>
+	  <script>
+    $(document).ready(function() {
+	    $('pre code').each(function(i, block) {
+       hljs.highlightBlock(block);
+	    });
+	    });
+	  </script>
+	  <script>hljs.initHighlightingOnLoad();</script>
+	  <script>
+        $(document).ready(function() {
+          $('#guzik').click(function() {
+          $total = Number($('#guzik').val()) + 1;
+          $("#guzik").prop('value', $total);
+          });
+        })
+    </script>
+  </body>
+</html>
