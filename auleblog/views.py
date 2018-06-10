@@ -70,7 +70,7 @@ def articlesViews(request):
 
 def categoryViews(request, category_id):
     choose_category = Article.objects.filter(category_article_id=category_id).order_by('-date_pub')
-    all_categories = Category.objects.filter(id=category_id)
+    all_categories = Category.objects.get(id=category_id)
     return render(request, 'blog/categoryviewhtml.html', {'choose_category': choose_category,
                                                    'all_categories': all_categories})
 

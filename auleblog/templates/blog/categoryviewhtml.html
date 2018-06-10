@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
+{% block title %}
+<title>Aule Blog {{ all_categories.category_name }}</title>
+{% endblock %}
+
+{% block meta_description %}
+<meta name="Description" content='Wpisy powiązane z kategorią {{ all_categories.category_name }}' />
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="Keywords" content='{{ all_categories.category_name }}' />
+{% endblock %}
+
+
 {% block content %}
 			{% for wszystkie in choose_category %}
             <h2 class="blog-post-title"><a href="{% url 'article' url_title=wszystkie.url_title article_id=wszystkie.id %}">{{ wszystkie.title }}</a></h2>
