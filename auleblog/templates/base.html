@@ -3,21 +3,19 @@
         {% block title %}{% endblock %}
         {% block meta_description %}{% endblock %}
         {% block meta_keywords %}{% endblock %}
-        <meta name="Description" content="Blog programisty amatora który zamieszcza tutaj posty związane z etapami tworzenia tego bloga w Django jak również innych aplikacji stworzonych przez niego w Djago." />
-        <meta name="Keywords" content="Django, Blog, Tworzenie aplikacji, Python, Aplikacje w Django" />
+
         {%load blog_tags %}
   	    {%load staticfiles %}
         <link href="{% static "blog/css/bootstrap.min.css"%}" rel="stylesheet">
 	    <link href="{% static "blog/css/blog.css"%}" rel="stylesheet">
 	    <link href="{% static "blog/css/tabela.css"%}" rel="stylesheet">
 	    <link href="{% static "blog/js/hl/styles/idea.css"%}" rel="stylesheet">
-	    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://aule.pythonanywhere.com/artykuly/rss/" />
     </head>
   
     <body>
 
         <div class="blog-masthead">
-            <div class="container">
+             <div class="container">
                 <nav class="blog-nav">
                     <a class="blog-nav-item" href="{% url 'articles_list' %}">Home</a>
                     {% for elementy_kategorie in category_all_in_view %}
@@ -88,7 +86,7 @@
                     <div class="sidebar-module">
                         <h4>Inne:</h4>
                         <ol class="list-unstyled">
-                            <li><a href="{% url "new_entry" %}">RSS</a></li>
+                            <li><a href="{% url 'new_entry' %}">RSS</a></li>
                             <li><a href="#">GitHub</a></li>
                             <li><a href="https://pl.python.org/forum/">Polskie forum Pythona</a></li>
                             <li><a href="https://www.facebook.com/groups/pythonpl/">Facebook</a></li>
@@ -109,8 +107,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	  <script src="{% static 'blog/ajax.js' %}" </script>
-	  <script src="{% static "js/hl/highlight.pack.js"%}"</script>
+	  <script src="{% static 'blog/ajax.js' %}"</script>
+	  <script src="{% static 'js/hl/highlight.pack.js' %}"</script>
 	  <script>
     $(document).ready(function() {
 	    $('pre code').each(function(i, block) {

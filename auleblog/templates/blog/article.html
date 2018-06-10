@@ -1,4 +1,17 @@
 {% extends "base.html" %}
+
+{% block title %}
+<title>{{ art.title }}</title>
+{% endblock %}
+
+{% block meta_description %}
+<meta name="Description" content='{{ art.meta_description }}' />
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="Keywords" content='{{ art.meta_keywords }}' />
+{% endblock %}
+
 {% block content %}
             <h2 class="blog-post-title">{{ art.title }}</h2>
             <p class="blog-post-meta"><strong>{{ art.date_pub }}</strong> popełniony przez <strong>{{ art.article_author }}</strong></p>
@@ -43,7 +56,5 @@
 			{{form.post}}
 			</div>
 			<button type="submit" class="btn btn-default btn-sm">Dodaj</button>
-
-		<form>
+		</form>
 {% endblock %}
-
