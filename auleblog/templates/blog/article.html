@@ -46,6 +46,7 @@
 		  {% endif %}
 		  <p>Dodaj komentarz:</p>
 		  <form method="post">
+			  {% csrf_token %}
 		  <div class="form-group">
 			{{form.comment_author}}
 			</div>

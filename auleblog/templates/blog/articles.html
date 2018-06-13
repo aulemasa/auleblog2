@@ -14,16 +14,16 @@ tego bloga w Django jak również innych aplikacji stworzonych przez niego w Dja
 {% endblock %}
 
 {% block content %}
-			{% for wszystkie in article_all_pagination %}
-            <h2 class="blog-post-title"><a href="{% url 'article' url_title=wszystkie.url_title article_id=wszystkie.id %}">{{ wszystkie.title }}</a></h2>
-            <p class="blog-post-meta"><strong>{{ wszystkie.date_pub }}</strong> popełniony przez <strong>{{ wszystkie.article_author }}</strong></p>
-            <p>{{ wszystkie.content|safe|escape|truncatechars:150 }}</p>
+			{% for articles in article_all_pagination %}
+            <h2 class="blog-post-title"><a href="{% url 'article' url_title=articles.url_title article_id=articles.id %}">{{ articles.title }}</a></h2>
+            <p class="blog-post-meta"><strong>{{ articles.date_pub }}</strong> popełniony przez <strong>{{ articles.article_author }}</strong></p>
+            <p>{{ articles.content|safe|escape|truncatechars:150 }}</p>
             <div class="row">
                 <div class="col-sm-6">
-                    <p class="coment-text text-left">Liczba odwiedzin: {{ wszystkie.counter }}</p>
+                    <p class="coment-text text-left">Liczba odwiedzin: {{ articles.counter }}</p>
                 </div>
                 <div class="col-sm-6">
-                    <p class="coment-text text-right">Komentarze: {{ wszystkie.comment_set.count }}</p>
+                    <p class="coment-text text-right">Komentarze: {{ articles.comment_set.count }}</p>
                 </div>
             </div>
 			<hr>

@@ -18,8 +18,8 @@
              <div class="container">
                 <nav class="blog-nav">
                     <a class="blog-nav-item" href="{% url 'articles_list' %}">Home</a>
-                    {% for elementy_kategorie in category_all_in_view %}
-                    <a class="blog-nav-item" href="/category/{{elementy_kategorie.id}}" name="tag" value="{{elementy_kategorie.id}}">{{elementy_kategorie.category_name}}</a>
+                    {% for category_elements in category_all_in_view %}
+                    <a class="blog-nav-item" href="/category/{{category_elements.id}}" name="tag" value="{{category_elements.id}}">{{category_elements.category_name}}</a>
                     {% endfor %}
                 </nav>
             </div>
@@ -87,7 +87,7 @@
                         <h4>Inne:</h4>
                         <ol class="list-unstyled">
                             <li><a href="{% url 'new_entry' %}">RSS</a></li>
-                            <li><a href="#">GitHub</a></li>
+                            <li><a href="https://github.com/aulemasa">GitHub</a></li>
                             <li><a href="https://pl.python.org/forum/">Polskie forum Pythona</a></li>
                             <li><a href="https://www.facebook.com/groups/pythonpl/">Facebook</a></li>
                         </ol>
