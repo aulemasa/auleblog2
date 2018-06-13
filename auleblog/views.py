@@ -15,6 +15,8 @@ from django.utils.safestring import mark_safe
 from django.conf import settings
 from weasyprint import HTML, CSS
 from django.template import Context
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 from django.contrib.syndication.views import Feed
 # Create your views here.
@@ -98,8 +100,8 @@ def articleViews(request, url_title, article_id):
         form = CommentForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'blog/article.html', {'art': single_article, 'next': next, 'prev': prev,
-                                                         'comment': comment, 'form': form})
+            return HttpResponseRedirect(reverse('article', kwargs={'url_title': url_title,
+                                                                   'article_id': single_article.id}))
 
     return render(request, 'blog/article.html', {'art': single_article, 'next': next, 'prev': prev,
                                                  'comment': comment, 'form': form})
