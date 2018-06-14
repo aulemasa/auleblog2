@@ -31,35 +31,26 @@ def articlesViews(request):
     page = request.GET.get('page')
     article_all_pagination = paginator.get_page(page)
 
-    arg = {}
-
     year = date.today().year
     month = date.today().month
     start_value = 0
-    previous_month = request.GET.get('pm')
 
+    previous_month = request.GET.get('pm')
     try:
         previous_month = previous_month
     except ValueError:
         previous_month = None
-    current_month = request.GET.get('am')
-    try:
-        current_month = current_month
-    except ValueError:
-        current_month = None
 
-    if previous_month != None:
+    if previous_month is not None:
         ny = month - int(previous_month)
-        if ny <= 12 and ny >= 1:
+        if 1 <= ny <= 12:
             start_value = start_value + int(previous_month)
             my_workouts = Article.objects.order_by('date_pub').filter(date_pub__year=year, date_pub__month=ny)
             view_calendar = WorkoutCalendar(my_workouts).formatmonth(year, ny)
-            return render(request, 'blog/articles.html', {'article_all_pagination': article_all_pagination, 'arg': arg, 'view_calendar': mark_safe(view_calendar),
+            return render(request, 'blog/articles.html', {'article_all_pagination': article_all_pagination,
+                                                          'view_calendar': mark_safe(view_calendar),
                                                           'previous_month': previous_month,
                                                           'start_value': start_value,
-                                                          'category_all_in_view': category_all_in_view})
-        elif current_month != None:
-            return render(request, 'blog/articles.html', {'article_all_pagination': article_all_pagination, 'arg': arg, 'view_calendar': mark_safe(view_calendar),
                                                           'category_all_in_view': category_all_in_view})
         else:
             my_workouts = Article.objects.order_by('date_pub').filter(date_pub__year=year, date_pub__month=month)
@@ -68,7 +59,8 @@ def articlesViews(request):
         my_workouts = Article.objects.order_by('date_pub').filter(date_pub__year=year, date_pub__month=month)
         view_calendar = WorkoutCalendar(my_workouts).formatmonth(year, month)
 
-    return render(request, 'blog/articles.html', {'article_all_pagination': article_all_pagination, 'arg': arg, 'view_calendar': mark_safe(view_calendar),
+    return render(request, 'blog/articles.html', {'article_all_pagination': article_all_pagination,
+                                                  'view_calendar': mark_safe(view_calendar),
                                                   'category_all_in_view': category_all_in_view})
 
 
@@ -131,7 +123,7 @@ def articleToPdf(request, article_id):
     pdf_file = HTML(string=rendered_html).write_pdf(stylesheets=[CSS(settings.PDF_ROOT + '/css/pdf.css')])
 
     http_response = HttpResponse(pdf_file, content_type='application/pdf')
-    http_response['Content-Disposition'] = 'filename="report.pdf"'
+    http_response['Content-Disposition'] = 'filename="post.pdf"'
 
     return http_response
 
