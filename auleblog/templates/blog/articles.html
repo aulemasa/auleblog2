@@ -6,7 +6,7 @@
 
 {% block meta_description %}
 <meta name="Description" content="Blog programisty amatora który zamieszcza tutaj posty związane z etapami tworzenia
-tego bloga w Django jak również innych aplikacji stworzonych przez niego w Djago." />
+tego bloga w Django jak również innych aplikacji stworzonych przez niego w Django." />
 {% endblock %}
 
 {% block meta_keywords %}
@@ -16,7 +16,7 @@ tego bloga w Django jak również innych aplikacji stworzonych przez niego w Dja
 {% block content %}
 			{% for articles in article_all_pagination %}
             <h2 class="blog-post-title"><a href="{% url 'article' url_title=articles.url_title article_id=articles.id %}">{{ articles.title }}</a></h2>
-            <p class="blog-post-meta"><strong>{{ articles.date_pub }}</strong> popełniony przez <strong>{{ articles.article_author }}</strong></p>
+            <p class="blog-post-meta"><strong>{{ articles.date_pub }}</strong> popełniony przez <strong>{{ articles.author }}</strong></p>
             <p>{{ articles.content|safe|escape|truncatechars:150 }}</p>
             <div class="row">
                 <div class="col-sm-6">

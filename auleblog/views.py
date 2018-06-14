@@ -20,6 +20,8 @@ from django.http import HttpResponseRedirect
 
 from django.contrib.syndication.views import Feed
 # Create your views here.
+
+
 @csrf_protect
 def articlesViews(request):
     article_all = Article.objects.all().order_by('-id')
@@ -74,7 +76,7 @@ def categoryViews(request, category_id):
     choose_category = Article.objects.filter(category_article_id=category_id).order_by('-date_pub')
     all_categories = Category.objects.get(id=category_id)
     return render(request, 'blog/categoryviewhtml.html', {'choose_category': choose_category,
-                                                   'all_categories': all_categories})
+                                                          'all_categories': all_categories})
 
 
 def articleViews(request, url_title, article_id):
