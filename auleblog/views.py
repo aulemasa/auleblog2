@@ -14,9 +14,10 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils.safestring import mark_safe
 from django.conf import settings
 from weasyprint import HTML, CSS
-from django.template import Context
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormView
 
 from django.contrib.syndication.views import Feed
 # Create your views here.
@@ -69,6 +70,26 @@ def categoryViews(request, category_id):
     all_categories = Category.objects.get(id=category_id)
     return render(request, 'blog/categoryviewhtml.html', {'choose_category': choose_category,
                                                           'all_categories': all_categories})
+
+
+class ArticleDetailView(DetailView):
+    model = Article
+    slug_field = 'url_title'
+    template_name = 'blog/article_detail.html'
+    context_object_name = 'art'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(**kwargs)
+        context['form'] = CommentFormView
+        return context
+
+
+class CommentFormView(FormView):
+    template_name = 'blog/comment_form.html'
+    form_class = CommentForm
+
+    #def get_success_url(self):
+     #   return reverse('article-details', kwargs={'url_title': self.object.url_title, 'article_id': self.object.article_id})
 
 
 def articleViews(request, url_title, article_id):
