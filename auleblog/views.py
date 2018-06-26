@@ -80,7 +80,8 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
-        context['form'] = CommentFormView
+        context['comment'] = Comment.objects.filter(post=self.kwargs['pk'])
+        context['form'] = CommentForm(initial={'post': self.kwargs['pk']})
         return context
 
 
@@ -88,8 +89,18 @@ class CommentFormView(FormView):
     template_name = 'blog/comment_form.html'
     form_class = CommentForm
 
-    #def get_success_url(self):
-     #   return reverse('article-details', kwargs={'url_title': self.object.url_title, 'article_id': self.object.article_id})
+    pk = 0
+    slug_field = ''
+
+    def form_valid(self, form):
+        poste = form.cleaned_data['post']
+        self.pk = poste.id
+        self.slug_field = poste.url_title
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('article-details', kwargs={'slug': self.slug_field, 'pk':self.pk})
 
 
 def articleViews(request, url_title, article_id):
