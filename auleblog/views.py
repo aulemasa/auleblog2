@@ -82,15 +82,20 @@ class ArticleDetailView(DetailView):
         context = super(ArticleDetailView, self).get_context_data(**kwargs)
         context['comment'] = Comment.objects.filter(post=self.kwargs['pk'])
         context['form'] = CommentForm(initial={'post': self.kwargs['pk']})
+        try:
+            context['next'] = Article.objects.get(id=self.kwargs['pk']).get_next_by_date_pub()
+        except Article.DoesNotExist:
+            context['next'] = None
+        try:
+            context['prev'] = Article.objects.get(id=self.kwargs['pk']).get_previous_by_date_pub()
+        except Article.DoesNotExist:
+            context['prev'] = None
         return context
 
 
 class CommentFormView(FormView):
     template_name = 'blog/comment_form.html'
     form_class = CommentForm
-
-    pk = 0
-    slug_field = ''
 
     def form_valid(self, form):
         poste = form.cleaned_data['post']

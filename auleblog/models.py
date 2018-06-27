@@ -26,7 +26,7 @@ class Article(models.Model):
         return "{title}".format(title=self.title)
 
     def get_absolute_url(self):
-        return "/article/%s%s%s/" % (self.url_title, ',', self.id)
+        return "/article-details/%s%s%s/" % (self.url_title, ',', self.id)
 
     def absolute_title(self):
         return "%s" % self.title

@@ -15,7 +15,7 @@ tego bloga w Django jak również innych aplikacji stworzonych przez niego w Dja
 
 {% block content %}
 			{% for articles in article_all_pagination %}
-            <h2 class="blog-post-title"><a href="{% url 'article' url_title=articles.url_title article_id=articles.id %}">{{ articles.title }}</a></h2>
+            <h2 class="blog-post-title"><a href="{% url 'article-details' slug=articles.url_title pk=articles.id %}">{{ articles.title }}</a></h2>
             <p class="blog-post-meta"><strong>{{ articles.date_pub }}</strong> popełniony przez <strong>{{ articles.author }}</strong></p>
             <p>{{ articles.content|safe|escape|truncatechars:150 }}</p>
             <div class="row">

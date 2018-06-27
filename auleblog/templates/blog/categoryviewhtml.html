@@ -15,7 +15,7 @@
 
 {% block content %}
 			{% for wszystkie in choose_category %}
-            <h2 class="blog-post-title"><a href="{% url 'article' url_title=wszystkie.url_title article_id=wszystkie.id %}">{{ wszystkie.title }}</a></h2>
+            <h2 class="blog-post-title"><a href="{% url 'article' slug=wszystkie.url_title title=wszystkie.id %}">{{ wszystkie.title }}</a></h2>
             <p class="blog-post-meta"><strong>{{ wszystkie.date_pub }}</strong> popełniony przez <strong>{{ wszystkie.article_author }}</strong></p>
             <p>{{ wszystkie.content|safe|escape|truncatechars:150 }}</p>
             <div class="row">
