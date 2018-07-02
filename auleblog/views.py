@@ -16,7 +16,7 @@ from django.conf import settings
 from weasyprint import HTML, CSS
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic.detail import DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView
 
 from django.contrib.syndication.views import Feed
@@ -63,6 +63,19 @@ def articlesViews(request):
     return render(request, 'blog/articles.html', {'article_all_pagination': article_all_pagination,
                                                   'view_calendar': mark_safe(view_calendar),
                                                   'category_all_in_view': category_all_in_view})
+
+
+class CategoryListView(ListView):
+    context_object_name = 'choose_category'
+    template_name = 'blog/category.html'
+    queryset= Category.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryListView, self).get_context_data(**kwargs)
+        context['choose_category'] = Article.objects.filter(category_article_id=self.kwargs['pk']).order_by('-date_pub')
+        context['all_categories'] = Category.objects.get(id=self.kwargs['pk'])
+        return context
+
 
 
 def categoryViews(request, category_id):

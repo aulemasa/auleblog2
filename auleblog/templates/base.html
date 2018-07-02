@@ -19,7 +19,7 @@
                 <nav class="blog-nav">
                     <a class="blog-nav-item" href="{% url 'articles_list' %}">Home</a>
                     {% for category_elements in category_all_in_view %}
-                    <a class="blog-nav-item" href="/category/{{category_elements.id}}" name="tag" value="{{category_elements.id}}">{{category_elements.category_name}}</a>
+                    <a class="blog-nav-item" href="/cata/{{category_elements.id}}" name="tag" value="{{category_elements.id}}">{{category_elements.category_name}}</a>
                     {% endfor %}
                 </nav>
             </div>

@@ -16,4 +16,5 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     re_path(r'^article-details/(?P<slug>[-\w\d]+),(?P<pk>\d+)/$', auleblog.views.ArticleDetailView.as_view(), name='article-details'),
     re_path('^my_form/$', auleblog.views.CommentFormView.as_view(), name='my_form_view_url'),
+    re_path('cata/(?P<pk>\d+)', auleblog.views.CategoryListView.as_view(), name="article-category"),
 ]
