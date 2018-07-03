@@ -15,10 +15,8 @@ from django.utils.safestring import mark_safe
 from django.conf import settings
 from weasyprint import HTML, CSS
 from django.urls import reverse
-from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView
-
 from django.contrib.syndication.views import Feed
 # Create your views here.
 
@@ -72,17 +70,9 @@ class CategoryListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CategoryListView, self).get_context_data(**kwargs)
-        context['choose_category'] = Article.objects.filter(category_article_id=self.kwargs['pk']).order_by('-date_pub')
+        context['choose_category'] = Article.objects.filter(category_article_id=self.kwargs['pk']).order_by('-id')
         context['all_categories'] = Category.objects.get(id=self.kwargs['pk'])
         return context
-
-
-
-def categoryViews(request, category_id):
-    choose_category = Article.objects.filter(category_article_id=category_id).order_by('-date_pub')
-    all_categories = Category.objects.get(id=category_id)
-    return render(request, 'blog/categoryviewhtml.html', {'choose_category': choose_category,
-                                                          'all_categories': all_categories})
 
 
 class ArticleDetailView(DetailView):
@@ -119,36 +109,6 @@ class CommentFormView(FormView):
 
     def get_success_url(self):
         return reverse('article-details', kwargs={'slug': self.slug_field, 'pk':self.pk})
-
-
-def articleViews(request, url_title, article_id):
-    single_article = Article.objects.get(id=article_id)
-    try:
-        next = single_article.get_next_by_date_pub()
-    except Article.DoesNotExist:
-        next = None
-    try:
-        prev = single_article.get_previous_by_date_pub()
-    except Article.DoesNotExist:
-        prev = None
-
-    art2 = Article.objects.filter(id=article_id)
-    counter_adder = single_article.counter + 1
-    art2.update(counter=counter_adder)
-
-    comment = Comment.objects.filter(post=article_id)
-
-    data = {'post': single_article.id}
-    form = CommentForm(initial=data)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('article', kwargs={'url_title': url_title,
-                                                                   'article_id': single_article.id}))
-
-    return render(request, 'blog/article.html', {'art': single_article, 'next': next, 'prev': prev,
-                                                 'comment': comment, 'form': form})
 
 
 def find_by_title(request):
